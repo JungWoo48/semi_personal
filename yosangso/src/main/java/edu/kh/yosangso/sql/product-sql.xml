@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>product-sql.xml</comment>
+
+	<entry key="selectProduct">
+	SELECT PRODUCT_NO, PRODUCT_NM, CATEGORY , PRICE , STOCK , PRODUCT_DATE , SELL_RATE , EXPLAIN , PART
+	FROM PRODUCT
+	WHERE PRODUCT_NO = ? </entry>
+	<entry key=""></entry>
+	<entry key=""></entry>
+	<entry key=""></entry>
+	<entry key=""></entry>
+	<entry key=""></entry>
+	<entry key=""></entry>
+	<entry key=""></entry>
+
+
+</properties>
