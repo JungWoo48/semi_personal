@@ -34,6 +34,7 @@ public class ProductDetailServlet extends HttpServlet{
 			ProductService service = new ProductService();
 			
 			productList = service.selectProduct(pro);
+		
 			
 	
 			
@@ -48,4 +49,7 @@ public class ProductDetailServlet extends HttpServlet{
 		req.getRequestDispatcher(path).forward(req, resp);
 		
 	}
+
+	
+	
 }

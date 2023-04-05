@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/productDetail.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/slick.css">
    
-    <script src="${contextPath}/resources/js/productdetails.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="/slick-1.8.1/slick-1.8.1/slick/slick.js"></script>
     <script src="https://kit.fontawesome.com/881d1deef7.js" crossorigin="anonymous"></script>
-    <title>index</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    
+    
+    <title>productDetail</title>
 </head>
 <body>
     <!-- 헤더, 컨텐츠 -->
@@ -39,7 +39,7 @@
                         <img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg">
                     </div>
                     <!--제품이름, 가격, 수량, 구매가격, 구매및 장바구니-->
-                    <form action="purcahse" method="POST" name="purcahse">
+                    <form action="addcart" method="GET" name="purcahse">
                     <div class ="productover">
                         <!--제품이름-->
                         <div class="productNm">
@@ -61,7 +61,7 @@
                         <hr>
                         <!--수량 가격-->
                         <div class="count">
-                            수량 : <input type="number" id="countbox" min="1">
+                            수량 : <input type="number" id="countbox" min="1" name="count">
                         </div>
                         <br>
                         <hr>
@@ -70,22 +70,27 @@
                             <pre>총 상품금액</pre>
                             <span id="totalcost"></span>원
                         </div>
+                  
+                        <input type="hidden" value="${productList[0].productNo}" name="productNo">
+                        
                         <br>
                             <!--구매 버튼-->
                             <div>
-                            <button type="summit" id="btn-purchase">구매하기</button>
+                            <button type="submit" id="btn-purchase">구매하기</button>
                             </div>
+                            
+                     </form>       
                             <br>
                             <div>
                             <!--장바구니 버튼-->
-                            <button type="summit" id="btn-addcart">장바구니</button>
+                           	<button type="button" value="${productList[0].productNo}" onclick="return addcart()" id="btn-addcart">장바구니</button>
                             </div>   
                     </div>
-                    </form>
                 </div>
                 <br>
                 <br>
                 <br>
+                <p id="product-detail"></p>
                 <br>
                 <br>
                 <br>
@@ -95,9 +100,9 @@
                     <!--상세정보, 리뷰 ,문의하기로 화면을 이동해주는 버튼-->
                     <div class="fm">
                     <div class="fastmove">
-                        <a href="#">상세정보</a>
-                        <a href="#">리뷰</a>
-                        <a href="#">문의하기</a>
+                        <a href="#product-detail">상세정보</a>
+                        <a href="#review">리뷰</a>
+                        <a href="#FAQ">문의하기</a>
                     </div>
                     <hr>
                     </div>
@@ -109,41 +114,8 @@
                     <h3>상품 설명</h3>
                     <br>
                     <br>
-                    <ul>
-                        <li>California Gold Nutrition CollagenUP, 464g(16.37oz)</li>
-                        <li>바다에서 얻은 콜라겐 펩타이드 + 히알루론산 + 비타민C</li>
-                        <li>무맛, 우피에서 추출하지 않은 가수분해 피쉬 콜라겐</li>
-                        <li>비동물성 공급원 히알루론산 및 비타민C</li>
-                        <li>건강한 모발, 피부, 손발톱, 관절, 뼈 건강 증진*</li>
-                        <li>효소를 통해 생체 이용 가능한 펩타이드로 분해된 가수분해콜라겐</li>
-                        <li>글루텐, 유전자 변형 성분 및 대두 무함유</li>
-                        <li>cGMP 인증 시설에서 생산</li>
-                        <li>100% 골드 개런티(Gold Guarantee)</li>
-                    </ul>
-            
-                    <br>
-                
-                    <ul>
-                        <li>I형: 이 콜라겐 유형은 체내 전체 콜라겐의 8090%를 차지합니다. I형 콜라겐은 체내에 가장 풍부하게 존재하며 피부, 뼈, 힘줄 및 인대의 구조를 형성합니다.</li>
-                        <li>II형: 무릎, 어깨 등 탄력 연골에 존재하는 이 콜라겐 유형은 관절 건강에 도움이 됩니다.</li>
-                        <li>III형: 이 유형은 일반적으로 콜라겐 I형과 함께 발견되며 근육, 동맥, 장기에 존재합니다.</li>
-                        <li>IV형: 피부층에 존재하는 IV형 콜라겐은 다양한 피부 기능을 유지하는 데 도움이 됩니다.</li>
-                        <li>V형: 이 콜라겐 유형은 눈 각막, 뼈, 일부 피부층, 모발, 태반 조직에 존재합니다.</li>
-                    </ul>
-            
-                    <br>
-            
-                    <pre>
-                        콜라겐, 히알루론산, 비타민C는 모두 근골격계 건강 및 웰빙과 관련되어 있습니다. California Gold Nutrition CollagenUP은 모발, 피부, 손발톱, 관절, 
-                        뼈 건강에 도움이 되는 이 세 가지 성분을 모두 함유하고 있습니다.* 이 무맛 분말을 좋아하는 음료에 넣으면 
-                        간편하게 식단에 콜라겐을 추가하여 섭취할 수 있습니다.
-                        콜라겐 유형
-                        콜라겐은 전신에 존재하는 주요 구조 단백질이며 신체 안팎으로 우리 몸에 필수적인 기본 구성 요소를 제공합니다. 
-                        콜라겐에는 다양한 유형이 있으며, 분자가 조합되는 방식과 체내에서 콜라겐이 사용되는 위치에 따라 구분합니다. 
-                        당사의 CollagenUP 분말은 5가지 주요 콜라겐 중 I, III형 콜라겐 2가지를 모두 함유합니다.
-                        </pre>
-                
                     
+                    <span>${productList[0].explain}</span>
                 </div>
                 <br>
                 <br>
@@ -160,9 +132,9 @@
                 <div class="items">
                     <button class="prev"><</button>
                     <div class="item active"><img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg"></div>
-                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg"></div>
-                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg"></div>
-                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg"></div>
+                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, 비타민, 메디테이트, 캡슐 60정정.jpg"></div>
+                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, 비타민, 모발, 비오틴, 콜라겐. 케라틴, 캡슐 120정.jpg"></div>
+                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, 비타민, 헤어 구미젤리, 무설탕, 비오틴, 비타민 C, 미네랄, 딸기 코코넛, 60개.jpg"></div>
                     <button class="next">></button>
                 </div>
                     <div class="stepper">
@@ -172,6 +144,9 @@
                 <div class="step"></div>
                 </div>  
                 </div>
+                <p id="review"></p>
+                <br>
+                <br>
                 <br>
                 <br>
             
@@ -234,6 +209,7 @@
                 <!--review end-->
             
                 <br>
+                 <p id="FAQ"></p>
                 <br>
                 <br>
                 <br>
@@ -321,11 +297,11 @@
   	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 	<!-- jQuery 라이브러리 추가 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
    
     <!-- main.js 연결 -->
     <script src="${contextPath}/resources/js/main.js"></script>
-    <script src="${contextPath}/resources/js/productDetail.js"></script>
     <script src="${contextPath}/resources/js/slick.js"></script>
+    <script src="${contextPath}/resources/js/productDetail.js"></script>
 </body>
 </html>

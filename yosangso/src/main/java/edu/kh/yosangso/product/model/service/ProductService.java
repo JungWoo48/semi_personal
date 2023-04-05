@@ -1,5 +1,6 @@
 package edu.kh.yosangso.product.model.service;
 
+
 import static edu.kh.yosangso.common.JDBCTemplate.*;
 
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import java.util.List;
 
+import edu.kh.yosangso.cart.model.vo.ShoppingCart;
 import edu.kh.yosangso.product.model.dao.ProductDAO;
 import edu.kh.yosangso.product.model.vo.Product;
 
@@ -31,11 +33,22 @@ public class ProductService {
 		
 		return productList;
 	}
-	
-	
 
-	
-	
+	public int detailCart(ShoppingCart cart) throws Exception {
+		
+		Connection conn = getConnection();
+		
+		int result = dao.detailCart(conn, cart);
+		
+		if(result > 0)	commit(conn);  
+		else			rollback(conn);
+		
+		
+		close(conn);
+		
+		
+		return result;
+	}
 	
 	
 }

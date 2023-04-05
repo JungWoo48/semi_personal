@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Properties;
 
 import static edu.kh.yosangso.common.JDBCTemplate.*;
+
+import edu.kh.yosangso.cart.model.vo.ShoppingCart;
 import edu.kh.yosangso.product.model.vo.Product;
 
 public class ProductDAO {
@@ -65,11 +67,10 @@ public class ProductDAO {
 				
 				productList.add(
 						new Product(productNo, productName, category, price, stock, productDate, sellRate,
-								explain, part)
-				
+								explain, part)			
+						
 						);
 				
-
 			} 
 			
 		} finally {
@@ -82,6 +83,30 @@ public class ProductDAO {
 		
 
 	}
+
+	public int detailCart(Connection conn, ShoppingCart cart) throws Exception{
+		
+		int result =0;
+		
+		try {
+			String sql = prop.getProperty("DetailAddCart");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, cart.getProductNo());
+			pstmt.setInt(2, cart.getBuyingRate());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} finally{
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
 	
 	
 	

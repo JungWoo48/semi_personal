@@ -1,18 +1,3 @@
-// 검색창
-const searchForm = document.querySelector("#search-area fieldset");
-
-document.getElementById("query").addEventListener("focus", e => {
-    searchForm.style.border = "1px solid #2678F3";
-});
-document.getElementById("query").addEventListener("focusout", e => {
-    searchForm.style.border = "";
-    // e.target.value = "";
-});
-document.getElementById("query").addEventListener("mouseover", e => {
-    searchForm.style.border = "1px solid rgba(0, 0, 0, 0.2)";
-});
-
-/* ----------------------------------------------------------- */
 let curPos = 0; // 현재 보이는 요소의 인덱스 번호
 
 function prev(){
@@ -70,8 +55,8 @@ $(".que").click(function() {
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 3,
-        nextArrow: "<button type='button' class='slick-next'><img src='../resources/image/product/right.png' style='width:30px;'></button>",
-        prevArrow: "<button type='button' class='slick-prev'><img src='../resources/image/product/left.png' style='width:30px;'></button>"
+        nextArrow: "<button type='button' class='slick-next'><img src='${contextPath}/resources/image/product/right.jpg' style='width:30px;'></button>",
+        prevArrow: "<button type='button' class='slick-prev'><img src='${contextPath}/resources/image/product/left.jpg' style='width:30px;'></button>"
     })
 });
 
@@ -83,8 +68,36 @@ const delcost = document.getElementById("delcost");
 count.addEventListener("click", function() {
 
 
-    const n1 = price.value * count.value
+    const n1 = Number(price.innerText) * count.value
     const n2 = delcost.value
 
-    totalcost.innerText = Number(n1) + Number(n2)
+    totalcost.innerText = Number(n1)+Number(n2)
 });
+
+function addcart() {
+	const count = document.getElementById("countbox").value;
+	
+	$.ajax({
+		url: "${contextPath}/product/product",
+		type: "get",
+		data: {"count" : count.value},
+		success: function(result){
+			console.log(result)
+			alert("장바구니에 추가됨");;
+		},
+		error: function() {
+			alert("실패")
+			console.log(data)
+		}
+	});
+		
+}
+
+
+
+
+
+
+
+
+
