@@ -39,7 +39,7 @@
                         <img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg">
                     </div>
                     <!--제품이름, 가격, 수량, 구매가격, 구매및 장바구니-->
-                    <form action="addcart" method="GET" name="purcahse">
+                    <form action="purchase" method="GET" name="purcahse">
                     <div class ="productover">
                         <!--제품이름-->
                         <div class="productNm">
@@ -71,7 +71,7 @@
                             <span id="totalcost"></span>원
                         </div>
                   
-                        <input type="hidden" value="${productList[0].productNo}" name="productNo">
+                        <input type="hidden" value="${productList[0].productNo}" name="productNo" id="proNo">
                         
                         <br>
                             <!--구매 버튼-->
@@ -83,7 +83,7 @@
                             <br>
                             <div>
                             <!--장바구니 버튼-->
-                           	<button type="button" value="${productList[0].productNo}" onclick="return addcart()" id="btn-addcart">장바구니</button>
+                           	<button type="button"  onclick="return addcart()" id="btn-addcart">장바구니</button>
                             </div>   
                     </div>
                 </div>

@@ -76,18 +76,22 @@ count.addEventListener("click", function() {
 
 function addcart() {
 	const count = document.getElementById("countbox").value;
+	const pro = document.getElementById("proNo").value;
+	console.log(count);
+	console.log(pro);
+	
 	
 	$.ajax({
-		url: "${contextPath}/product/product",
+		url: "addcart",
 		type: "get",
-		data: {"count" : count.value},
+		data: {"count" : count, "productNo" : pro},
 		success: function(result){
-			console.log(result)
+			console.log(result);
 			alert("장바구니에 추가됨");;
 		},
 		error: function() {
 			alert("실패")
-			console.log(data)
+			console.log(result);
 		}
 	});
 		

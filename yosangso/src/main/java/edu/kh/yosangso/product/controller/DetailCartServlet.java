@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import edu.kh.yosangso.cart.model.vo.ShoppingCart;
 import edu.kh.yosangso.product.model.service.ProductService;
 
-@WebServlet("/productDetail/addcart")
+@WebServlet("/product/addcart")
 public class DetailCartServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
