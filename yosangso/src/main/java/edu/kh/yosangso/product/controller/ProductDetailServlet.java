@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import edu.kh.yosangso.board.model.service.ReviewService;
+import edu.kh.yosangso.board.model.vo.Review;
 import edu.kh.yosangso.product.model.service.ProductService;
 import edu.kh.yosangso.product.model.vo.Product;
 
@@ -28,15 +30,16 @@ public class ProductDetailServlet extends HttpServlet{
 		int pro = Integer.parseInt(req.getParameter("ProductNo"));
 		List<Product> productList = new ArrayList<>();
 		
+		
 		try {
 
 			
 			ProductService service = new ProductService();
 			
 			productList = service.selectProduct(pro);
-		
 			
 	
+
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -48,8 +51,9 @@ public class ProductDetailServlet extends HttpServlet{
 		
 		req.getRequestDispatcher(path).forward(req, resp);
 		
+		
 	}
-
+	
 	
 	
 }

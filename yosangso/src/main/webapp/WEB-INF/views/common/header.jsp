@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- 헤더 -->
 <header>
@@ -26,7 +26,7 @@
        <!-- 검색 -->
        <section>
            <article id="search-area">
-               <form action="#" name="search-form">
+               <form action="searchingProduct" name="search-form">
                    <fieldset>
                        <input type="search" id="query" name="query"
                        autocomplete="off">
@@ -40,15 +40,47 @@
        <section id="header-box-mypage">
            <nav>
                <ul>
-                   <li>
-                       <a href="${contextPath}/cart/shoppingCart" class="fa-solid fa-cart-shopping"></a>
-                   </li>
-                   <li>
-                       <a href="${contextPath}/member/myPageInfo" class="fa-solid fa-user"></a>
-                   </li>
-                   <li>
-                       <a href="${contextPath}/member/login">로그인</a>
-                   </li>
+                <!-- 장바구니 -->
+                <c:choose>
+                    <c:when test="${empty loginMember}">
+                        <li>
+                         <a href="${contextPath}/member/login" class="fa-solid fa-cart-shopping"></a> 
+                      </li>              	
+                    </c:when>
+                    <c:otherwise>
+                        <li>
+                            <a href="${contextPath}/cart/shoppingCart" class="fa-solid fa-cart-shopping"></a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+
+                   <!-- 사람모양(회원가입, 마이페이지) -->
+                   <c:choose>
+                  	<c:when test="${empty loginMember}">
+                  		<li>
+	                       <a href="${contextPath}/member/signUp" class="fa-solid fa-user"></a> 
+	                    </li>              	
+                  	</c:when>
+                  	<c:otherwise>
+                  		<li>
+	                       <a href="${contextPath}/member/myPageInfo" class="fa-solid fa-user"></a>
+	                    </li>
+                  	</c:otherwise>
+                  </c:choose>
+                  
+                  <!-- 로그인, 로그아웃 -->
+                  <c:choose>
+                  	<c:when test="${empty loginMember}">
+                  		<li>
+	                       <a href="${contextPath}/member/login">로그인</a>    
+	                    </li>              	
+                  	</c:when>
+                  	<c:otherwise>
+                  		<li>
+	                       <a href="${contextPath}/member/logout">로그아웃</a>
+	                    </li>
+                  	</c:otherwise>
+                  </c:choose>
                    <li>
                        <a href="${contextPath}/board/faq">FAQ</a>
                    </li>

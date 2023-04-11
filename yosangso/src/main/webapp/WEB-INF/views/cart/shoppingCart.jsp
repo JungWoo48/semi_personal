@@ -55,7 +55,7 @@
 	                        <!-- 이미지 -->
 	                        <div>
 	                            <div class="img-div">
-	                                <img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg" id="image">
+	                                <img src="${contextPath}/resources/image/all/${list.productName}.jpg" id="image">
 	                            </div>
 	                        </div>
 	                        <!-- 이름과 가격 -->
@@ -72,8 +72,9 @@
 	                        <!-- 수량 -->
 	                        <div class="counting">
 	                            <div>
-	                                <input type="text" class="counting-input" disabled value=${ list.buyingRate }>
-	                                <input type="hidden" class="productNo" disabled value=${ list.productNo }>
+	                                <input type="text" class="counting-input" value=${ list.buyingRate } disabled >
+	                                <input type="hidden" class="productNo" name="productNo" value=${ list.productNo }>
+	                                <input type="hidden" class="hiddencount" name="count" value=${ list.buyingRate }>
 		                            <button type="button" onclick="plusCount(${vs.index})" id="plus">+</button>
 	                                <button type="button" onclick="minusCount(${vs.index})" id="minus">-</button>
 	                            </div>
@@ -90,6 +91,7 @@
 	                            
 	                        </div>
 	                    </div>
+                        <input type="hidden" value="${list.cartNo}" name="cartList">
 	                   <c:set var="total" value ="${total + eachTotal}"/>
 	                </c:forEach>     
                     <div class="price-tag">
@@ -99,7 +101,6 @@
                             상품 금액 ${total} 원 +  (배송비) 
                             ${ deliveryTip }원 = 최종 결제 금액 ${total + deliveryTip }원 
                         </div>
-                        <input type="hidden" value="${cartList[0].memberNo}" name="memberNo">
                         <div>
                             <button id="pay-button">결제하기</button>
                         </div>
@@ -120,6 +121,10 @@
         </div>
 
 
+	<!-- 장바구니 결제 테스트 입니다. -->
+       <form action="${contextPath}/order/pay" method="GET">
+			<button>결제 테스트 </button>
+       </form>
         
 
     <!-- 헤더, 컨텐츠 끝 -->

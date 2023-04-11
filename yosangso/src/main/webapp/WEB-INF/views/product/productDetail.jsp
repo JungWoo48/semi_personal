@@ -36,7 +36,7 @@
                 <div class="productdetails-container">
                     <!--제품 이미지-->
                     <div class="product-img">
-                        <img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg">
+                        <img src="${contextPath}/resources/image/product/${productList[0].productName}.jpg">
                     </div>
                     <!--제품이름, 가격, 수량, 구매가격, 구매및 장바구니-->
                     <form action="purchase" method="GET" name="purcahse">
@@ -55,7 +55,7 @@
                         <br>
                         <br>
                         <div class="del-cost">
-                            배송비 :<input id="delcost" value="3000">원
+                            배송비 :<input id="delcost" value="3000" disabled>원
                         </div>
                         <br>
                         <hr>
@@ -73,7 +73,9 @@
                   
                         <input type="hidden" value="${productList[0].productNo}" name="productNo" id="proNo">
                         
+                        <input type="hidden" value="${loginMember.memberNo}" name="loginmember" id="loginmember">
                         <br>
+                        
                             <!--구매 버튼-->
                             <div>
                             <button type="submit" id="btn-purchase">구매하기</button>
@@ -82,8 +84,19 @@
                      </form>       
                             <br>
                             <div>
-                            <!--장바구니 버튼-->
-                           	<button type="button"  onclick="return addcart()" id="btn-addcart">장바구니</button>
+                            
+                     <c:choose>     
+                        <c:when test="${loginMember != null}"> 
+                            	<!--장바구니 버튼-->
+                           		<button type="button"  onclick="return addcart()" id="btn-addcart">장바구니</button>
+                        </c:when>
+                        
+                        <c:otherwise>
+                        		<button type="button"  onclick="return login()" id="btn-addcart">장바구니</button>
+                        </c:otherwise>
+                        
+                        
+           			</c:choose>
                             </div>   
                     </div>
                 </div>
@@ -111,7 +124,7 @@
                 <br>
                 <!--상품정보-->
                 <div class="product-detail">
-                    <h3>상품 설명</h3>
+                    <h2>상품 설명</h2>
                     <br>
                     <br>
                     
@@ -163,7 +176,7 @@
                             <!--고객 아이콘-->
                             <div class="review-icon"><i class="fa-solid fa-circle-user"></i></div>
                             <!--고객 이름-->
-                            <div class="review-name">윤현식</div>
+                            <div class="review-name">${reviewtList[0].reviewNo}</div>
                             <!--게시일-->
                             <div class="review-date"><input type="date"></div>
                         </div>
@@ -172,10 +185,7 @@
                         <div class="review-main">
                             <img src="/assets/re1.jpeg">
                             <div>
-                                <pre class="review-con">
-                        유통기한이 넉넉해서 미리 구입했는데 품절이네요 이제품 2년째 복용중입니다 일단은 얼굴이마주름이 현저히 없어져서 저도 
-                        놀랄 정도구요 특히 무릎관절통증도 거의 사라졌어요 장기복용이 정답입니다 꾸준히 복용 해보세요.
-                                </pre>
+                                <pre class="review-con">${reviewtList[0].reviewContent}</pre>
                             </div>    
                         </div>
             

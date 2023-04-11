@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>board-sql.xml</comment>
+	
+	<entry key="reviewAdd">
+		INSERT INTO REVIEW VALUES(27, ?, DEFAULT, ?, 1, 1)
+	</entry>
+	
+	
+	
+	<entry key="reviewImageAdd">
+		INSERT INTO REVIEW_IMG VALUES(REVIEW_IMG_SEQ.NEXTVAL, ?, ?,1,5, ?)
+	</entry>
+	
+	<entry key="selectReview">
+		SELECT REVIEW_NO, REVIEW_CONTENT , REVIEW_DATE , REVIEW_RATE 
+		FROM REVIEW
+		WHERE PRODUCT_NO = ?
+	</entry>
+	
+
+
+</properties>

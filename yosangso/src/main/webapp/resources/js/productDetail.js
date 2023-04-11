@@ -77,24 +77,31 @@ count.addEventListener("click", function() {
 function addcart() {
 	const count = document.getElementById("countbox").value;
 	const pro = document.getElementById("proNo").value;
+	var signIn = sessionStorage.getItem('loginmember');
 	console.log(count);
 	console.log(pro);
+	console.log(loginmember);
 	
-	
-	$.ajax({
+
+		$.ajax({
 		url: "addcart",
 		type: "get",
 		data: {"count" : count, "productNo" : pro},
 		success: function(result){
-			console.log(result);
 			alert("장바구니에 추가됨");;
 		},
 		error: function() {
-			alert("실패")
-			console.log(result);
+			alert("수량을 선택해주세요");
+			
+			
 		}
 	});
 		
+}
+
+function login() {
+	location.href="http://localhost:8080/yosangso/member/login"
+	
 }
 
 
