@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import edu.kh.yosangso.board.model.service.BoardService;
 import edu.kh.yosangso.board.model.service.ReviewService;
+import edu.kh.yosangso.board.model.vo.QNA;
+import edu.kh.yosangso.board.model.vo.Reply;
 import edu.kh.yosangso.board.model.vo.Review;
 import edu.kh.yosangso.product.model.service.ProductService;
 import edu.kh.yosangso.product.model.vo.Product;
@@ -27,9 +30,11 @@ public class ProductDetailServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		
 		int pro = Integer.parseInt(req.getParameter("ProductNo"));
 		List<Product> productList = new ArrayList<>();
-		
+		List<Review> reviewList = new ArrayList<>();
+		List<QNA> QNAList = new ArrayList<>();
 		
 		try {
 
@@ -38,7 +43,16 @@ public class ProductDetailServlet extends HttpServlet{
 			
 			productList = service.selectProduct(pro);
 			
+			ReviewService reviewservice = new ReviewService();
+
+			reviewList = reviewservice.selectReview(pro);
+			
+			BoardService QNAservice = new BoardService();
+			
+			QNAList = QNAservice.selectQNA(pro);
+			
 	
+			
 
 			
 		} catch(Exception e) {
@@ -49,11 +63,14 @@ public class ProductDetailServlet extends HttpServlet{
 		
 		req.setAttribute("productList", productList);
 		
+		req.setAttribute("reviewList", reviewList );
+		
+		req.setAttribute("QNAList", QNAList );
+		
 		req.getRequestDispatcher(path).forward(req, resp);
 		
 		
 	}
-	
 	
 	
 }

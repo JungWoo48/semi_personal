@@ -14,9 +14,10 @@ import lombok.ToString;
 public class QNA {
 	
 	private int inquiryNO;
-	private String inquiryContecnt;
-	private String inquirtDate;
+	private String inquiryContent;
+	private String inquiryDate;
 	private int memberNo;
 	private String memberName;
+	private int productNo;
 
 }

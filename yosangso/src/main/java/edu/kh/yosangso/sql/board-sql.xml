@@ -55,7 +55,15 @@
 	
 	
 	
-	<entry key=""></entry>
+	<entry key="selectQNA">
+		SELECT INQUIRY_NO , INQUIRY_CONTENT , INQUIRY_DATE , MEMBER_NO , MEMBER_NM , PRODUCT_NO
+		FROM INQUIRY
+		WHERE PRODUCT_NO = ?
+	</entry>
+	
+	
+	
+	
 	<entry key=""></entry>
 
 

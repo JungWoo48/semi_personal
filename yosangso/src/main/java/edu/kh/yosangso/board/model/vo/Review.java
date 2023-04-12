@@ -26,6 +26,7 @@ public class Review {
 	private int productNo;
 	private int orderNo;
 	private String productName;
+	private String memberName;
 	
 	public Review(int reviewNo, String reviewContent, String reviewDate, int reviewRate) {
 		super();
@@ -44,19 +45,9 @@ public class Review {
 		this.productName = productName;
 	}
 
-	public Review(int reviewNo, String reviewContent, String reviewDate, int reviewRate, int productNo) {
-		super();
-		this.reviewNo = reviewNo;
-		this.reviewContent = reviewContent;
-		this.reviewDate = reviewDate;
-		this.reviewRate = reviewRate;
-		this.reviewRate = productNo;
-	}
-
 	
 	
 
-	
 	
 	
 	

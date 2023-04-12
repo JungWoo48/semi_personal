@@ -55,21 +55,23 @@
                         <br>
                         <br>
                         <div class="del-cost">
-                            배송비 :<input id="delcost" value="3000" disabled>원
+                            배송비 : <span id="delcost">3000</span>원&nbsp;&nbsp;(10000원 이상 구매시 무료)
                         </div>
                         <br>
                         <hr>
                         <!--수량 가격-->
                         <div class="count">
-                            수량 : <input type="number" id="countbox" min="1" name="count">
+                            수량 : &nbsp;&nbsp;&nbsp;&nbsp;<input type="number" id="countbox" min="1" name="count" value="1">
                         </div>
                         <br>
                         <hr>
                         <!--총 금액-->
                         <div class="total-cost">
-                            <pre>총 상품금액</pre>
-                            <span id="totalcost"></span>원
+                        상품금액&nbsp;&nbsp;<span id="counting"></span>원 + 배송비&nbsp;&nbsp;<span id=deltip></span> = 총 상품금액
+                            &nbsp;&nbsp;<span id="totalcost"></span>원
+                        
                         </div>
+                        
                   
                         <input type="hidden" value="${productList[0].productNo}" name="productNo" id="proNo">
                         
@@ -78,9 +80,9 @@
                         
                             <!--구매 버튼-->
                             <div>
-                            <button type="submit" id="btn-purchase">구매하기</button>
+	                            <button type="submit" id="btn-purchase">구매하기</button>
                             </div>
-                            
+	                            
                      </form>       
                             <br>
                             <div>
@@ -176,16 +178,16 @@
                             <!--고객 아이콘-->
                             <div class="review-icon"><i class="fa-solid fa-circle-user"></i></div>
                             <!--고객 이름-->
-                            <div class="review-name">${reviewtList[0].reviewNo}</div>
+                            <div class="review-name"><span>${reviewList[0].memberName}</span></div>
                             <!--게시일-->
-                            <div class="review-date"><input type="date"></div>
+                            <div class="review-date"><span>${reviewList[0].reviewDate}</span></div>
                         </div>
             
                         <!--리뷰 내용-->
                         <div class="review-main">
                             <img src="/assets/re1.jpeg">
                             <div>
-                                <pre class="review-con">${reviewtList[0].reviewContent}</pre>
+                                <pre class="review-con">${reviewList[0].reviewContent}</pre>
                             </div>    
                         </div>
             
@@ -199,18 +201,15 @@
                             <!--고객 아이콘-->
                             <div class="review-icon"><i class="fa-solid fa-circle-user"></i></div>
                             <!--고객 이름-->
-                            <div class="review-name">최훈석</div>
+                            <div class="review-name"><span>${reviewList[1].memberName}</span></div>
                             <!--게시일-->
-                            <div class="review-date"><input type="date"></div>
+                            <div class="review-date">${reviewList[1].reviewDate}</div>
                         </div>
             
                         <!--리뷰 내용-->
                         <div class="review-main">
                             <img src="/assets/re2.jpeg">
-                            <pre class="review-con">
-                        저분자 피쉬 콜라겐에 비타민c와 히알루론산까지 들어있는 제품이고 믿고 먹는 품질의 브랜드라 구매했어요 피부가 맑아지고 확실히
-                        효과 있어요 나이가 들면서 콜라겐이 줄어들기때문에 꾸준히 복용하려구요 한스푼에 물이나 음료 300ml 섞어서 먹으면 되요        
-                            </pre>
+                            <pre class="review-con">${reviewList[1].reviewContent}</pre>
                         </div>
                         
             
@@ -228,7 +227,7 @@
                 <!--FAQ 컨테이너-->
                 
                 <div class="FAQ-container">
-                    <h2>FAQ</h2>
+                    <h2>QNA</h2>
                     <!--FAQ1-->
                     <div>
                         <!--고객 아이콘, 이름, 게시일-->
@@ -236,15 +235,15 @@
                             <!--고객 아이콘-->
                             <div class="FAQ-icon"><i class="fa-solid fa-circle-user"></i></div>
                             <!-- 고객 이름-->
-                            <div class="FAQ-name">김연수</div>
+                            <div class="FAQ-name">${QNAList[0].memberName}</div>
                             <!-- 게시일-->
-                            <div class="FAQ-date"><input type="date"></div>
+                            <div class="FAQ-date">${QNAList[0].inquiryDate}</div>
                         </div>
             
                         <!-- 질문 내용-->
                     <div id="Accordion_wrap">
                         <div class="que">
-                         <span>하루에 몇 달톤을 먹어야 하나요?</span>
+                         <span>${QNAList[0].inquiryContent}</span>
                           <div class="arrow-wrap">
                             <span class="arrow-top">↑</span>
                            <span class="arrow-bottom">↓</span>
@@ -283,21 +282,12 @@
             
             
         </section> 
-        
-        
-
-        
-       
+         
        
 		<br>
 		<br>
 		<br>
-
-
-
-
-
-        
+     
 
     <!-- 헤더, 컨텐츠 끝 -->
     </main>
