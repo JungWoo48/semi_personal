@@ -139,10 +139,10 @@ public class BoardService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<QNA> selectQNA(int pro) throws Exception{
+	public List<QNA> selectQNA() throws Exception{
 		Connection conn = getConnection();
 		
-		List<QNA> QNAList = dao.selectQNA(conn, pro);
+		List<QNA> QNAList = dao.selectQNA(conn);
 		
 		close(conn);
 		

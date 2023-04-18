@@ -1,8 +1,117 @@
 
 function kakaopay() {
+	
+	// 유효성 검사
+	const memName = document.getElementsByClassName("memName");
+	const memTel = document.getElementsByClassName("memTel");
+	const zip = document.getElementsByClassName("zip");
+	const add = document.getElementsByClassName("add");
+	const addDetail = document.getElementsByClassName("addDetail");
+	
+	const checkObj = {
+		"memName" : false,
+		"memTel" : false,
+		"zip" : false,
+		"add" : false,
+		"addDetail" : false
+	}
+	
+	
+	// 이름 유효성 검사
+	regExpName = /^[가-힣a-zA-Z]{2,18}$/;
+	if(regExpName.test(memName[0].value)) {
+		checkObj.memName = true;
+	} else {
+		checkObj.memName = false;
+	}
+	
+	// 전화번호 유효성 검사
+	regExp = /^0(1[01679])\d{4}\d{4}$/;
+	if(regExp.test(memTel[0].value)) {
+		checkObj.memTel = true;
+	} else {
+		checkObj.memTel = false;
+	}
+	
+	// 우편번호 유효성 검사
+	regExp = /^\d{5,6}$/;
+	if(regExp.test(zip[0].value)) {
+		checkObj.zip = true;
+	} else {
+		checkObj.zip = false;
+	}
+	
+	// 주소 유효성 검사
+	if(add[0].value.length != 0) {
+		checkObj.add = true;
+	} else {
+		checkObj.add = false;
+	}
+	
+	// 주소 상세 유효성 검사
+	if(addDetail[0].value.length != 0) {
+		checkObj.addDetail = true;
+	} else {
+		checkObj.addDetail = false;
+	}
+	
+	
+	function validate() {
+		let str;
+		
+		for(let key in checkObj) {
+			if(!checkObj[key]) {
+				switch(key) {
+					case "memName": str="이름이"; break;
+					case "memTel": str="휴대폰번호 형식이"; break;
+					case "zip": str="우편번호가"; break;
+					case "add": str="주소가"; break;
+					case "addDetail": str="상세주소가"; break;
+				}
+				
+				str += " 유효하지 않습니다.";
+				
+				// alert(str);
+				swal('결제 실패!', str, 'warning');
+				
+				document.getElementsByClassName(key[0]).focus();
+				
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
+	
+	if( !validate() )  {
+	// 유효성검사 실패 
+		return false; 
+		
+	} else {
+		// 유효성검사 성공 
 
 	
 	
+	
+	// 결제 로딩
+	const main = document.getElementsByTagName("main");
+	main[0].style.pointerEvents = "none";
+	main[0].classList.add("filter-blur");
+	const loaderFix = document.getElementsByClassName("loader-fix");
+	loaderFix[0].style.display = "block";
+	
+	
+	setTimeout(function() {
+		main[0].classList.remove("filter-blur");
+		main[0].style.pointerEvents = "auto";
+		loaderFix[0].style.display = "none";
+	}, 3000);
+
+
+
+	// DB 정보 저장과 카카오 결제에 필요한 정보 추출
     // 회원 번호
     const memberNo = document.getElementById("memNo");
 	console.log(memberNo.innerText);
@@ -107,13 +216,12 @@ function kakaopay() {
 		type : "POST",
 		dataType : "JSON",
 		success : function() {
-			alert("주문 성공");
-			alert(orderNum);
-			addOrderDetail();
 			
+			addOrderDetail();
+			console.log("구매자 정보 order테이블 추가 성공");
 		},
 		error : function() {
-			alert("주문 실패");
+			alert("구매자 정보 order테이블 추가 실패");
 		}
 	});
 		
@@ -138,12 +246,10 @@ function kakaopay() {
 				type : "POST",
 				dataType : "JSON",
 				success : function(result) {
-					alert("상품 구매정보 추가 성공");
-					console.log(result + '구매한 상품정보 등록 성공');
+					console.log("구매한 상품정보 등록 성공");
 					
 				},
 				error : function() {
-					alert(orderNum);
 					alert("상품 구매정보 추가 실패");
 				}
 			});		
@@ -151,6 +257,7 @@ function kakaopay() {
 	}
 		
 			
+	
 			
 	setTimeout(function() {
 				
@@ -177,23 +284,22 @@ function kakaopay() {
 			fail_url: "http://localhost:8080/YoSangSo/order/pay"
 		},
 		success: function(result) {
-			
-				alert("성공");
-				window.open(result.next_redirect_pc_url);
-
+			console.log("카카오페이 결제 성공");
+			window.open(result.next_redirect_pc_url);
 		},
 		error: function() {
-			alert("실패");
+			alert("카카오페이 결제 실패");
 		}
 	});
 
 	}, 3000);
+	
 
 
-	
-	
-	
-}
+
+
+	}// 유효성검사 else 
+} // kakaopay()
 	
 	
 	

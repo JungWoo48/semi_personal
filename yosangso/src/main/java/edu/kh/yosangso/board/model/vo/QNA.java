@@ -18,6 +18,5 @@ public class QNA {
 	private String inquiryDate;
 	private int memberNo;
 	private String memberName;
-	private int productNo;
 
 }

@@ -54,6 +54,8 @@ public ReviewListPagingDAO() {
 		}
 		return result;
 	}
+	
+	
 
 	public List<Order> getList(Connection conn, int memberNo, int pageNum, int amount) throws Exception{
 		
@@ -74,18 +76,19 @@ public ReviewListPagingDAO() {
 				
 				String productName = rs.getString("PRODUCT_NM");
 				String orderDate = rs.getString("ORDER_DATE");
-				String orderNo = rs.getString("ORDER_NO");				//int orderNo = rs.getInt("r.ORDER_NO");
-						
-				list.add(new Order(productName, orderNo, orderDate));
+				int orderDetailNo = rs.getInt("ORDER_DETAIL_NO");
+				int productNo = rs.getInt("PRODUCT_NO");
+				
+				list.add(new Order(productName, orderDetailNo, orderDate, productNo));
 			}
-			
 		}finally {
 			close(rs);
 			close(pstmt);
 		}
-		
 		return list;
 	}
+	
+	
 
 	public List<Review> getDoneList(Connection conn, int memberNo, int pageNum, int amount) throws Exception {
 		
@@ -106,11 +109,11 @@ public ReviewListPagingDAO() {
 				
 				String reviewContent = rs.getString("REVIEW_CONTENT");
 				int productNo = rs.getInt("PRODUCT_NO");
-				int orderNo = rs.getInt("ORDER_NO");
+				String orderDetailNo = rs.getString("ORDER_DETAIL_NO");
 				String productName= rs.getString("PRODUCT_NM");
 			
 						
-				list.add(new Review(reviewContent, memberNo,productNo,orderNo, productName));
+				list.add(new Review(reviewContent, memberNo,productNo,orderDetailNo, productName));
 			}
 			
 		}finally {

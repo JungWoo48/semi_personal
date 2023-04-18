@@ -15,6 +15,12 @@ public class ReviewListPagingService  {
 	
 	Connection conn;
 	
+	/**
+	 * @param memberNo
+	 * @return
+	 * @throws Exception
+	 * @author lee
+	 */
 	public int getTotal(int memberNo) throws Exception {
 		
 		ReviewListPagingDAO dao = new ReviewListPagingDAO();
@@ -28,6 +34,14 @@ public class ReviewListPagingService  {
 		return result;
 	}
 
+	/**
+	 * @param memberNo
+	 * @param pageNum
+	 * @param amount
+	 * @return
+	 * @throws Exception
+	 * @author lee
+	 */
 	public List<Order> getList(int memberNo, int pageNum, int amount) throws Exception{
 		
 		List<Order> list = new ArrayList<>();
@@ -40,10 +54,17 @@ public class ReviewListPagingService  {
 		
 		close(conn);
 		
-		
 		return list;
 	}
 
+	/** 
+	 * @param memberNo
+	 * @param pageNum
+	 * @param amount
+	 * @return
+	 * @throws Exception
+	 * @author lee
+	 */
 	public List<Review> getDoneList(int memberNo, int pageNum, int amount) throws Exception{
 		
 		List<Review> list = new ArrayList<>();
@@ -60,6 +81,12 @@ public class ReviewListPagingService  {
 		return list;
 	}
 
+	/**
+	 * @param memberNo
+	 * @return
+	 * @throws Exception
+	 * @author lee
+	 */
 	public int getDoneTotal(int memberNo) throws Exception {
 		ReviewListPagingDAO dao = new ReviewListPagingDAO();
 		

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/main-sub-style.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/inquiry/inquiryWriting.css">
     <script src="https://kit.fontawesome.com/881d1deef7.js" crossorigin="anonymous"></script>
-    <title>inquiry</title>
+    <title>1:1문의 페이지</title>
 </head>
 <body>
     <!-- 헤더, 컨텐츠 -->
@@ -45,6 +45,8 @@
                                     <span>Question</span>
                                 </div>
                                 <div>
+                                ${loginMember.memberName}님 무엇이 궁금하세요?<br>
+                                <br>
                                 구매하려는 상품에 대해 궁금한 점이 있으신 경우 문의해주세요.
                                 </div>
                             </div>
@@ -55,7 +57,13 @@
                                 </div>
 
                                 <div>
-                                    <textarea name="" id="inquiryContent"  placeholder="문의를 남겨주세요." value="inquiryContent"></textarea>
+                                    <textarea name="" id="inquiryContent" placeholder="
+                                                                    상담시간
+
+                                                                    평일(월 ~ 금) 10:00 ~ 17:00
+
+                                                                    (Off-time 12:30 ~ 13:30, 토/일/공휴일 휴무)"
+                                    value="inquiryContent"></textarea>
                                 </div>
                             </div>
 
@@ -102,5 +110,8 @@
 
     <!-- inquiryAdd.js 연결 -->
     <script src="${contextPath}/resources/js/board/inquiryAdd.js"></script>
+
+    <!-- alert창 바꾸기 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

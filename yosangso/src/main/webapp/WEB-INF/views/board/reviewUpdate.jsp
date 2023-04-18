@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +14,7 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/main-sub-style.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/review/ReviewUpdate.css">
     <script src="https://kit.fontawesome.com/881d1deef7.js" crossorigin="anonymous"></script>
-    <title>reviewUpdate</title>
+    <title>리뷰 수정</title>
 </head>
 <body>
     <!-- 헤더, 컨텐츠 -->
@@ -34,22 +36,22 @@
                 <section  class="content-box-right">
                     
                             <!-- 컨텐트 오른쪽 영역 -->
-                            <section class="right">
+                            <section class="right"> 
                                 <div></div>
-                                <form action="reviewAdd" id="reviewImageContent" enctype="multipart/form-data" method="POST">
+                                <form action="reviewUpdate" id="reviewImageContent" method="POST">
                                 <div class="review-content">
                                     <div class="review-content1">
         
-                                        <div><p>${loginMember.memberName}님의 리뷰 작성란</p></div>
+                                        <div><p>${loginMember.memberName}님의 리뷰 수정란</p></div>
                                         
                                         <div>
                                             <div id="con-box">
                                                 <div id="review-imgBox">
-                                                    <img src="/이미지/요생소로고최종.png" alt="상품인데용" id="review-img"> 
+                                                    <img src="${contextPath}/resources/image/all/${productName}.jpg" alt="상품인데용" id="review-img"> 
                                                 </div>
                                                 <div id="review-imgExpalin">
                                                     <div>
-                                                        <p>Doctors Best, Quatrefolic이 함유된 완전 활성 B 복합체, 베지 캡슐 60정</p>
+                                                        <p>${productName}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,9 +74,9 @@
                                         </div>
         
                                         <div class="review-content2-2">
-                                            <div>리뷰 작성</div>
+                                            <div>리뷰 수정</div>
                                             <div>
-                                                <textarea name="reivewContentName" id="reivewTextarea" style="resize:none" 
+                                                <textarea name="reviewUpdateContent" id="reivewTextarea" style="resize:none" 
                                                 placeholder="리뷰를 남겨주세요."></textarea>
                                             </div>
                                         </div> 
@@ -90,16 +92,18 @@
                                                 
                                             
                                             <div class="review-img">
-                                                <img src="${contextPath}/resources/image/review/" alt="이미지" width="100px">
+                                                <span id="fileName">선택된 파일 없음</span>
                                             </div>
                                         </div>
         
         
                                     </div>
-        
+
+                                    <input type="hidden" name="orderDetailNo" value="${orderDetailNo}">
+                                   
                                     <div class="review-content3">
-                                        <button type="submit" id="reviewCancel">취소하기</button>
-                                        <button type="submit" id="reviewUpdate">수정하기</button>
+                                        <button type="button" id="reviewCancel" onclick="cancelAndRedirect()">취소하기</button>
+                                        <button type="submit" id="reviewUpdate" onclick="handleSubmit(event)">수정하기</button>
                                     </div>
                                 </form>
         
@@ -129,6 +133,9 @@
     <!-- main.js 연결 -->
     <script src="${contextPath}/resources/js/main.js"></script>
     <!-- reviewWriting.js 연결 -->
-    <script src="${contextPath}/resources/js/review/reviewWriting.js"></script>
+    <script src="${contextPath}/resources/js/review/reviewUpdate.js"></script>
+
+    <!-- alert창 바꾸기 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

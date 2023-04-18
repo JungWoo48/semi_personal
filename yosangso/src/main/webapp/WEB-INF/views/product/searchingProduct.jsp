@@ -41,10 +41,6 @@
          <!-- content 전체 감싸는 영역 -->
         <section class="content-container">
 
-            <!-- 1. 왼쪽사이드 -->
-            <section class="leftSide">
-            </section>
-
 
             <!-- 2. 가운데페이지 -->
             <section class="center">
@@ -89,8 +85,8 @@
                 
                 <!-- 인체사진 플로팅바-->
                 <div class="floating">
-                    <a href="#"> 
-                        <img id="people" src="${contextPath}/resources/image/index/인체이미지누끼.png">
+                    <a href="${contextPath }/product/person"> 
+                        <img id="people" src="${contextPath}/resources/image/index/인체일러스트누끼.png">
                     </a>
                 </div>
 

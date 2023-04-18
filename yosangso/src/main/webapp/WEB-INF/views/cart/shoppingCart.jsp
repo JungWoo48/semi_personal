@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/cart.css">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://kit.fontawesome.com/881d1deef7.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>cart</title>
 </head>
 <body>
@@ -27,23 +28,23 @@
 
        		<div class="post-slider">
                  <p>추천 상품</p>
-                 <div class="post-wrap">
-                     <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                     <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                     <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                     <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                     <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                 </div>
+                   <div class="post-wrap">
+                       <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=21"><img src="${contextPath}/resources/image/all/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></a></div>
+                       <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=15"><img src="${contextPath}/resources/image/all/NOW Foods, 고효능 비타민D-3, 10,000IU, 소프트젤 120정.jpg"></a></div>
+                       <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=24"><img src="${contextPath}/resources/image/all/Jarrow Formulas, Zinc Balance, 베지 캡슐 100정.jpg"></a></div>
+                       <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=33"><img src="${contextPath}/resources/image/all/Codeage, 비타민, 모발, 비오틴, 콜라겐. 케라틴, 캡슐 120정.jpg"></a></div>
+                       <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=42"><img src="${contextPath}/resources/image/all/California Gold Nutrition, 비타민D3(감귤류), 2,000IU, 30ml(1fl oz) - 시트러스맛.jpg"></a></div>
+                   </div>
              </div>
         </c:if>
         <c:if test="${!empty cartList }">
             <div class="info-bar">
                 <div>
-                    <span>장바구니</span><span>> 주문/결제</span><span>> 완료</span>
+                    <span>장바구니</span><span>> 주문/결제</span><span>> 결제완료</span>
                 </div>
                 <div>
-                	<form action="deleteCart" method="post">
-                    	<button id="remove-button">전체 상품 삭제</button>
+                	<form action="deleteCart" method="post" id="deleteCartAll">
+                    	<button type="button" id="remove-button" onclick="deleteConfirm()">전체 상품 삭제</button>
                     	<input type="hidden" value="${cartList[0].memberNo }" name="memberNo" id="memberNo">
                     </form>
                 </div>
@@ -75,8 +76,8 @@
 	                                <input type="text" class="counting-input" value=${ list.buyingRate } disabled >
 	                                <input type="hidden" class="productNo" name="productNo" value=${ list.productNo }>
 	                                <input type="hidden" class="hiddencount" name="count" value=${ list.buyingRate }>
-		                            <button type="button" onclick="plusCount(${vs.index})" id="plus">+</button>
-	                                <button type="button" onclick="minusCount(${vs.index})" id="minus">-</button>
+	                                <button type="button" onclick="minusCount(${vs.index})" id="minus" class="pm-btn">-</button>
+		                            <button type="button" onclick="plusCount(${vs.index})" id="plus" class="pm-btn">+</button>
 	                            </div>
 	                        </div>
 	                        <!-- 총 가격 -->
@@ -89,6 +90,9 @@
 	                            <div>배송비</div>
 	                            3000 원
 	                            
+	                        </div>
+	                        <div>
+	                        	<button type="button" class="x-btn" onclick="deleteOne(${list.productNo})"><i class="fa-solid fa-xmark"></i></button>
 	                        </div>
 	                    </div>
                         <input type="hidden" value="${list.cartNo}" name="cartList">
@@ -109,11 +113,11 @@
                 <div class="post-slider">
                     <p>추천 상품</p>
                     <div class="post-wrap">
-                        <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                        <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                        <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                        <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
-                        <div class="post"><img src="${contextPath}/resources/image/cart/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></div>
+                        <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=21"><img src="${contextPath}/resources/image/all/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></a></div>
+                        <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=15"><img src="${contextPath}/resources/image/all/NOW Foods, 고효능 비타민D-3, 10,000IU, 소프트젤 120정.jpg"></a></div>
+                        <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=24"><img src="${contextPath}/resources/image/all/Jarrow Formulas, Zinc Balance, 베지 캡슐 100정.jpg"></a></div>
+                        <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=33"><img src="${contextPath}/resources/image/all/Codeage, 비타민, 모발, 비오틴, 콜라겐. 케라틴, 캡슐 120정.jpg"></a></div>
+                        <div class="post"><a href="${contextPath}/product/productDetail?ProductNo=42"><img src="${contextPath}/resources/image/all/California Gold Nutrition, 비타민D3(감귤류), 2,000IU, 30ml(1fl oz) - 시트러스맛.jpg"></a></div>
                     </div>
                 </div>
             </div>

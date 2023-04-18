@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/inquiry/inquiryList.css">
     <script src="https://kit.fontawesome.com/881d1deef7.js" crossorigin="anonymous"></script>
     
-    <title>inquiryList</title>
+    <title>1:1문의 게시물 목록 페이지</title>
 </head>
 <body>
     <!-- 헤더, 컨텐츠 -->
@@ -91,8 +91,8 @@
                                                     </div>
                                                     <c:if test="${ loginMember.memberNo eq item.memberNo }">
                                                     <div class="quetionInnerBoxBtn" id="quetionInnerBoxBtn">
-                                                        <button type="button" id="inquiryDelete" onclick="return deleteBoard('${item.boardNo}')">삭제</button> 
-                                                        <button type="button" id="inquiryUpdate" onclick="return updateBoard('${item.boardNo}')">수정</button> 
+                                                        <button type="button" class="inquiryDelete" id="inquiryDelete" onclick="return deleteBoard(this,'${item.boardNo}')">삭제</button> 
+                                                        <button type="button" class="inquiryUpdate" id="inquiryUpdate" onclick="return updateBoard(this,'${item.boardNo}')">수정</button> 
                                                     </div>
                                                     </c:if>
                                                 </div>
@@ -100,7 +100,7 @@
                                                 <div class="answerTitleBox">
                                                     <div class="answerInnerBox" id="answerInnerBox">
                                                         <p><span>A</span></p>
-                                                        <p><span>내일쯤 되지 않을까요? 깔깔 몰라융 내가 어떻게 알아요~</span></p>
+                                                        <p><span>답변 준비중입니다....   :<( </span></p>
                                                     </div>
                                                 </div>
                                                 
@@ -110,7 +110,11 @@
                             		
                             		<c:otherwise>
                             			
-                            			<div><h1>게시물이 존재하지 않습니다.</h1></div>
+                            			<div id="emptyBox">
+                                            <div>게시물이 존재하지 않습니다.</div>
+                                            <div><img src="${contextPath}/resources/image/ready/readyImg.gif" alt=""></div>
+                                        </div>
+                                        
                             		
                             		</c:otherwise>
 
@@ -126,9 +130,11 @@
                     </div>
 	
                     <div class="numListBox">
+                        
                         <div id="numListBtnBox">
                             <a id="movePrev" href="${url}${pagination.prevPage}">&lt;</a> 
                         </div>
+                        
                     
                 	<c:forEach var="i" begin="${ pagination.startPage }" end="${ pagination.endPage }" step="1">
                         <li id="listBox" class="${pagination.currentPage eq i ? 'active' : '' }">
@@ -136,10 +142,11 @@
                         </li>
                   	 </c:forEach>
                    	
+                        
                         <div id="numListBtnBox2">
                             <a id="moveNext" href="${url}${pagination.nextPage}">&gt;</a>
                         </div>
-                        
+                       
                     </div>
 
                 </div>
@@ -190,5 +197,8 @@
 
     <!-- inquiryList.js 연결 -->
     <script src="${contextPath}/resources/js/board/inquiryList.js"></script>
+
+    <!-- alert 창 바꾸기 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

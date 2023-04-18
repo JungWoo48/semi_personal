@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/main-sub-style.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/review/ReviewPage.css">
     <script src="https://kit.fontawesome.com/881d1deef7.js" crossorigin="anonymous"></script>
-    <title>reviewWriting</title>
+    <title>리뷰 작성</title>
 </head>
 <body>
     <!-- 헤더, 컨텐츠 -->
@@ -36,20 +36,23 @@
                             <!-- 컨텐트 오른쪽 영역 -->
                             <section class="right">
                                 <div></div>
-                                <form action="reviewAdd" id="reviewImageContent" enctype="multipart/form-data" method="POST">
+                                <form action="reviewAdd" id="reviewImageContent" method="POST">
                                 <div class="review-content">
                                     <div class="review-content1">
-        
-                                        <div><p>${loginMember.memberName}님의 리뷰 작성란</p></div>
+                                        
+                                        <div><p>${ loginMember.memberName }님의 리뷰 작성란 
+                                        </div>
                                         
                                         <div>
                                             <div id="con-box">
                                                 <div id="review-imgBox">
-                                                    <img src="/이미지/요생소로고최종.png" alt="상품인데용" id="review-img"> 
+                                                    <img src="${contextPath}/resources/image/all/${productName}.jpg" /> 
                                                 </div>
                                                 <div id="review-imgExpalin">
+                                                    
                                                     <div>
-                                                        <p>Doctors Best, Quatrefolic이 함유된 완전 활성 B 복합체, 베지 캡슐 60정</p>
+                                                        <p>${productName}</p>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,7 +77,7 @@
                                         <div class="review-content2-2">
                                             <div>리뷰 작성</div>
                                             <div>
-                                                <textarea name="reivewContentName" id="reivewTextarea" style="resize:none" 
+                                                <textarea name="reviewContentName" id="reivewTextarea" style="resize:none" 
                                                 placeholder="리뷰를 남겨주세요."></textarea>
                                             </div>
                                         </div> 
@@ -85,21 +88,24 @@
                                                 <input type="text" class="upload-name" id="upload-name"
                                                 value="이미지를 업로드 하세요" placeholder="이미지를 업로드 하세요" disabled>
                                                 <label for="upload-file">파일선택</label>
-                                                <input type="file" id="upload-file">
+                                                <input type="file" name="reviewImgFile" id="upload-file" disabled>
+
                                             </div>
-                                                
                                             
                                             <div class="review-img">
-                                                <img src="${contextPath}/resources/image/review/" alt="이미지" width="100px">
+                                                <span id="fileName">선택된 파일 없음</span>
                                             </div>
+                                            
                                         </div>
         
         
                                     </div>
-        
+                                    <input type="hidden" name="memberNo" value="loginMember.memberNo">
+                                    <input type="hidden" name="productNo" value="${orderInfo.productNo}">
+                                    <input type="hidden" name="orderDetailNo" value="${orderInfo.orderDetailNo}">
                                     <div class="review-content3">
-                                        <button type="submit" id="reviewCancel">취소하기</button>
-                                        <button type="submit" id="reviewUpdate">등록하기</button>
+                                        <button type="button" id="reviewCancel" onclick="cancelAndRedirect()">취소하기</button>
+                                        <button type="submit" id="reviewUpdate" onclick="handleSubmit(event)">등록하기</button>
                                     </div>
                                 </form>
         
@@ -130,5 +136,8 @@
     <script src="${contextPath}/resources/js/main.js"></script>
     <!-- reviewWriting.js 연결 -->
     <script src="${contextPath}/resources/js/review/reviewWriting.js"></script>
+
+    <!-- alert창 바꾸기 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

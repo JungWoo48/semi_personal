@@ -49,7 +49,7 @@ public class ProductDetailServlet extends HttpServlet{
 			
 			BoardService QNAservice = new BoardService();
 			
-			QNAList = QNAservice.selectQNA(pro);
+			QNAList = QNAservice.selectQNA();
 			
 	
 			

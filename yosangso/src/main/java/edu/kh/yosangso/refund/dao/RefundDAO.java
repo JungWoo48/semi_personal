@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
+import edu.kh.yosangso.member.controller.LoginServlet;
 import edu.kh.yosangso.member.model.vo.Member;
 import edu.kh.yosangso.order.model.vo.Order;
 
@@ -49,12 +50,14 @@ public class RefundDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				String productName = rs.getString("PRODUCT_NM");
-				int orderNo = rs.getInt("ORDER_NO");
-				int price = rs.getInt("PRICE");
-				int buyingRate = rs.getInt("BUYING_RATE");
 				
-				 result.add(new Order(productName, orderNo, price, buyingRate));
+				String orderNo = rs.getString("ORDER_NO");
+				String orderDate = rs.getString("ORDER_DATE");
+				String address = rs.getString("ADDRESS");
+				String productName = rs.getString("PRODUCT_NM");
+				int count = rs.getInt("COUNT");
+				
+				 result.add(new Order(orderNo, orderDate,address, productName, count));
 				
 			}
 			
@@ -82,6 +85,7 @@ public class RefundDAO {
 				
 			}finally {
 				close(pstmt);
+				
 			}
 		}
 		
@@ -106,7 +110,7 @@ public class RefundDAO {
 		return result;
 	}
 
-	public List<Order> refundList(Connection conn, int memberNo) throws Exception{
+	public List<Order> refundList(Connection conn, int memberNo, int pageNum, int amount) throws Exception{
 		List<Order> result = new ArrayList<>();
 		
 		try {
@@ -118,13 +122,15 @@ public class RefundDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, (pageNum-1)*amount);
+			pstmt.setInt(3, pageNum*amount);
 			
 			rs = pstmt.executeQuery();
 			
 			
 			while(rs.next()) {
 				String productName = rs.getString("PRODUCT_NM");
-				int orderNo = rs.getInt("ORDER_NO");
+				String orderNo = rs.getString("ORDER_NO");
 				int price = rs.getInt("PRICE");
 				int buyingRate = rs.getInt("BUYING_RATE");
 				String refundDate = rs.getString("REFUND_DATE");
@@ -159,7 +165,7 @@ public class RefundDAO {
 			
 			while(rs.next()) {
 				String productName = rs.getString("PRODUCT_NM");
-				int orderNo = rs.getInt("ORDER_NO");
+				String orderNo = rs.getString("ORDER_NO");
 				int price = rs.getInt("PRICE");
 				int buyingRate = rs.getInt("BUYING_RATE");
 				String refundDate = rs.getString("REFUND_DATE");
@@ -174,6 +180,62 @@ public class RefundDAO {
 			close(pstmt);
 		}
 		
+		return result;
+	}
+
+	public List<Order> seeDetail(Connection conn, String orderNo) throws Exception{
+	List<Order> list = new ArrayList<>();
+		
+		try {
+			
+			String sql = prop.getProperty("seeDetail");
+			
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, orderNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String productName = rs.getString("PRODUCT_NM");
+				int price = rs.getInt("PRICE");
+				int buyingRate = rs.getInt("BUYING_RATE");
+				
+				list.add(new Order(productName, price, buyingRate));
+			}
+			
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	public int getTotal(Connection conn, int memberNo) throws Exception{
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("refundTotal");
+			
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt("COUNT");
+			}
+			
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+		}
 		return result;
 	}
 

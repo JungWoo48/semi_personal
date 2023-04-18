@@ -16,7 +16,7 @@ import edu.kh.yosangso.member.model.vo.Member;
 import edu.kh.yosangso.order.model.vo.Order;
 import edu.kh.yosangso.refund.service.RefundService;
 
-@WebServlet("/refund")
+@WebServlet("/refund/refunds")
 public class RefundServlet extends HttpServlet{
 
 	@Override
@@ -29,11 +29,11 @@ public class RefundServlet extends HttpServlet{
 		try {
 			Member member = (Member)session.getAttribute("loginMember");
 			
-			if(member == null) {
-				String filePath = "/WEB-INF/views/refund/refund.jsp";
-				RequestDispatcher dispatcher = req.getRequestDispatcher(filePath);
-				dispatcher.forward(req, resp);
-			}
+//			if(member == null) {
+//				String filePath = "/WEB-INF/views/refund/refund.jsp";
+//				RequestDispatcher dispatcher = req.getRequestDispatcher(filePath);
+//				dispatcher.forward(req, resp);
+//			}
 			
 			int memberNo = member.getMemberNo();
 			
@@ -42,9 +42,9 @@ public class RefundServlet extends HttpServlet{
 			orderList = service.orderList(memberNo);
 			
 			
-			
 		}catch(Exception e) {
 			e.printStackTrace();
+			throw new NullPointerException();
 		}
 		
 		String path = "/WEB-INF/views/refund/refund.jsp";

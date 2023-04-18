@@ -62,3 +62,43 @@ function minusCount(index) {
 	});
 
 }
+
+function deleteOne(productNo){
+	
+	$.ajax({
+		url: "cartDeleteOne",
+		type:  "post",
+		data: {"productNo" : productNo},
+		success: function(result){
+			if(result>0){
+				document.location.reload();
+				console.log("성공");
+			}else{
+				document.location.reload();
+			}
+		}
+	});
+	
+	
+}
+
+let confirm = function(msg, title, warning) {
+		swal({
+			title : title,
+			text : msg,
+			icon : warning,
+			buttons: ["아니요", "예"],
+			reverseButtons : true
+		}).then(function(isConfirm){
+			if (isConfirm) {
+				$("#deleteCartAll").submit();
+			}else{
+				swal('취소하였습니다' ,'', "info");
+			}
+		});
+	}
+
+function deleteConfirm(){
+	confirm('','정말로 삭제하시겠습니까?','warning');
+}
+

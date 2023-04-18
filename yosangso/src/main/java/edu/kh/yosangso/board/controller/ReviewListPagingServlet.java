@@ -40,6 +40,8 @@ public class ReviewListPagingServlet extends HttpServlet {
 		int doneTotal = service.getDoneTotal(memberNo);
 		
 		List<Order> list = service.getList(memberNo,pageNum,amount);
+		
+		
 		ReviewListPaging pageVo = new ReviewListPaging(pageNum, amount, total);
 		
 		
@@ -61,6 +63,7 @@ public class ReviewListPagingServlet extends HttpServlet {
 		dispatcher.forward(req, resp);
 		}catch(Exception e) {
 			e.printStackTrace();
+			throw new NullPointerException();
 		}
 	}
 	

@@ -11,16 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import edu.kh.yosangso.member.model.vo.Member;
 import edu.kh.yosangso.order.model.service.OrderService;
 import edu.kh.yosangso.order.model.vo.ApprovalUrl;
 
 @WebServlet("/order/payResult")
 public class PayResultServlet extends HttpServlet{
+	
+	/** 카카오페이 -> js onload ajax를 통해서 productDetail 테이블에서 가져옴
+	 *
+	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		List<ApprovalUrl> approval = null;
+		List<ApprovalUrl> approval = new ArrayList<>();
 		
 		try {
 			OrderService service = new OrderService();
@@ -31,13 +37,8 @@ public class PayResultServlet extends HttpServlet{
 			
 			System.out.println(memberNo);
 			
-			System.out.println("payResult Servlet 들어옴");
 			
 			approval = service.approvalUrl(memberNo);
-			
-//			req.setAttribute("approval", approval);
-//			String path = "/WEB-INF/views/order/approval_url.jsp";
-//			req.getRequestDispatcher(path).forward(req, resp);
 			
 			if(approval != null) {
 				System.out.println(approval.get(0).getOrderNo());
@@ -47,18 +48,13 @@ public class PayResultServlet extends HttpServlet{
 				System.out.println(approval.get(0).getPrice());
 				System.out.println(approval.get(0).getProductName());
 				
+				new Gson().toJson(approval, resp.getWriter());
 			}
 
 			
-			System.out.println("payResult Servlet 나감");
-			req.setAttribute("approval", approval);
-
-			String path = "/WEB-INF/views/order/approval_url.jsp";
-			
-			req.getRequestDispatcher(path).forward(req, resp);
-			
 		} catch(Exception e) {
 			e.printStackTrace();
+			throw new NullPointerException();
 		}
 	}
 

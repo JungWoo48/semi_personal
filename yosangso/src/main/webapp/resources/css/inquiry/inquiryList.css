@@ -66,7 +66,7 @@
 }
 
 .topQuestion > div:nth-child(1) > span {
-    font-size: 25px;
+    font-size: 35px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.639);
 }
@@ -120,7 +120,7 @@
     /* background-color: blue; */
     display: flex;
     justify-content: center;
-    padding-right: 110px;
+    padding-right: 150px;
 }
 
 #topOfList > div:nth-child(3){
@@ -147,7 +147,12 @@
     display: flex;
     /* border: 1px solid orange; */
     flex-direction: column;
+
+    
 }
+
+
+
 
 
 .middleOfList{
@@ -181,7 +186,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 100px;
+    width: 150px;
     height: 20px;
 }
 
@@ -205,7 +210,7 @@
 }
 
 .questionTitleBox > div:nth-child(1){ 
-    flex-basis: 70%;
+    flex-basis: 90%;
     display: flex;
     align-items: center;
     padding-left: 50px;
@@ -213,15 +218,17 @@
 
 #questionP {
     padding-left: 50px;
-    width: 90%;
+    width: 70%;
 }
 
 .questionTitleBox > div:nth-child(2){
-    flex-basis: 30%;
+    flex-basis: 10%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* margin-top:15px; */
+    margin-right: 25px;
 }
 
 
@@ -229,34 +236,46 @@
     margin-left: 50px;
 }
 
-.questionTitleBox  button {
-    width: 70px;
-    height: 30px;
-    border-radius: 8px;
-    /* background-color: #2678F3; */
-    margin-right: 50px;
-    border: 3px solid #6aafe6;
-    color: #6e6e6e;
-    font-size: 15px;
-    font-weight: bold;
+
+
+/*====================================수정버튼==========================================================*/
+
+#inquiryUpdate, #inquiryDelete {
+    box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:linear-gradient(to bottom, #94d4e8 5%, #42a3c7 100%);
+	background-color:#94d4e8;
+	border-radius:10px;
+	border:1px solid #1fa0f0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 25px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #5b6178;
 }
 
-#inquiryUpdate{
+#inquiryUpdate, #inquiryDelete{
     margin-top: 23px;
 }
 
-.questionTitleBox  button:hover {
-    letter-spacing: 2px;
-    transform: scale(1.2);
-    cursor: pointer;
+#inquiryUpdate:hover, #inquiryDelete:hover {
+	background:linear-gradient(to bottom, #42a3c7 5%, #94d4e8 100%);
+	background-color:#42a3c7;
+}
+
+#inquiryUpdate:active, #inquiryDelete:active {
+	position:relative;
+	top:1px;
 }
 
 
-.questionTitleBox  button:active {
-    transform: scale(1.5);
-}
+/*====================================수정버튼==========================================================*/
 
-/* ============================= */
+
+
 
 /* 앤서 박스 안  답변박스 */
 
@@ -290,54 +309,42 @@
     margin-top: 15px;
 }
 
+
+
 /* 텍스트 에리어 수정확인 버튼 */
-.btnUpdate {
-    width: 70px;
-    height: 30px;
-    border-radius: 8px;
-    margin-right: 50px;
-    border: 3px solid #6aafe6;
-    color: #6e6e6e;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left:100px;
-}
-
-.btnUpdate:hover{
-    letter-spacing: 2px;
-    transform: scale(1.2);
-    cursor: pointer;
-
-}
-
-.btnUpdate:active{
-    transform: scale(1.5);
-}
 /* 텍스트 에리어 수정취소 버튼 */
-.btnCancel {
-    width: 70px;
-    height: 30px;
-    border-radius: 8px;
-    margin-right: 50px;
-    border: 3px solid #6aafe6;
-    color: #6e6e6e;
-    font-size: 15px;
-    font-weight: bold;
-    margin-left:100px;
+
+/*====================================수정버튼==========================================================*/
+.btnUpdate, .btnCancel{
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:linear-gradient(to bottom, #94d4e8 5%, #42a3c7 100%);
+	background-color:#94d4e8;
+	border-radius:10px;
+	border:1px solid #1fa0f0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 25px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #5b6178;
+}
+.btnUpdate:hover, .btnCancel:hover {
+	background:linear-gradient(to bottom, #42a3c7 5%, #94d4e8 100%);
+	background-color:#42a3c7;
+}
+.btnUpdate:active, .btnCancel:active {
+	position:relative;
+	top:1px;
+}
+
+.btnCancel, .btnUpdate{
     margin-top: 23px;
 }
 
-.btnCancel:hover{
-    letter-spacing: 2px;
-    transform: scale(1.2);
-    cursor: pointer;
-
-}
-
-.btnCancel:active{
-    transform: scale(1.5);
-}
-
+/*====================================수정버튼==========================================================*/
 
 
 
@@ -364,26 +371,63 @@
     flex-direction: row-reverse;
 }
 
+/* 게시물이 존재하지 않습니다 css */
 
-#btnOfWriting{
-    width: 115px;
-    height: 40px;
-    border-radius: 8px;
-    /* background-color: #2678F3; */
-    margin-right: 50px;
-    border: 3px solid #6aafe6;
-    color: #6e6e6e;
+#emptyBox{ 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+#emptyBox > div:nth-child(1){
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 100px;
+    width: 100%;
+    text-align: center;
+}
+
+#emptyBox img{
+    width: 350px;
+    height: 350px;
+}
+
+/* 게시물이 존재하지 않습니다 css */
+
+
+
+/*====================================수정버튼==========================================================*/
+
+#btnOfWriting {
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:linear-gradient(to bottom, #94d4e8 5%, #42a3c7 100%);
+	background-color:#94d4e8;
+	border-radius:10px;
+	border:1px solid #1fa0f0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:12px 35px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #5b6178;
+    margin-right: 30px;
+}
 #btnOfWriting:hover{
-    letter-spacing: 2px;
-    transform: scale(1.2);
-    cursor: pointer;
+	background:linear-gradient(to bottom, #42a3c7 5%, #94d4e8 100%);
+	background-color:#42a3c7;
+}
+#btnOfWriting:active {
+	position:relative;
+	top:1px;
 }
 
-#btnOfWriting:active{
-    transform: scale(1.5);
-}
+/*====================================수정버튼==========================================================*/
 
 
 #numListBtnBox > a , #numListBtnBox2 > a{

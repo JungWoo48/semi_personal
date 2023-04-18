@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
-	
 	private String productName;
 	private int memberNo;
 	private String orderNo;
@@ -18,15 +17,16 @@ public class Order {
 	private int buyingRate;
 	private String refundDate;
 	private String orderDate;
+	private int orderDetailNo;
+	private String address;
+	private int count;
 	private String orderName;
 	private String orderPhone;
 	private String zipCode;
-	private String address;
 	private String orderNum;
 	private int productNo;
 	private String request;
 	private int buyingPrice;
-	
 
 	public Order(String productName, String orderNo, int price, int buyingRate) {
 		super();
@@ -36,16 +36,34 @@ public class Order {
 		this.buyingRate = buyingRate;
 	}
 
-	public Order(String productName, String orderNo, String orderDate) {
+
+
+
+
+	public Order(String orderNo, String orderDate, String address, String productName, int count) {
 		super();
-		this.productName = productName;
 		this.orderNo = orderNo;
 		this.orderDate = orderDate;
+		this.address = address;
+		this.productName = productName;
+		this.count = count;
 	}
 
+
+
+
+
+	public Order(String productName, int orderDetailNo, String orderDate) {
+		super();
+		this.productName = productName;
+		this.orderDetailNo = orderDetailNo;
+		this.orderDate = orderDate;
+
+	}
 	
 	
-	
+  
+  
 	/** 주문시 주문테이블 정보 추가(주문번호 생성)
 	 * @param memberNo
 	 * @param orderNum
@@ -62,7 +80,34 @@ public class Order {
 		this.zipCode = zipCode;
 		this.address = address;
 	}
+
 	
+	
+	public Order(String productName, int memberNo, String orderNo, int price, int buyingRate, String refundDate, String orderDate) {
+		super();
+		this.productName = productName;
+		this.memberNo = memberNo;
+		this.orderNo = orderNo;
+		this.price = price;
+		this.buyingRate = buyingRate;
+		this.refundDate = refundDate;
+		this.orderDate = orderDate;
+	}
+
+
+
+	public Order(String productName, int price, int buyingRate) {
+		super();
+		this.productName = productName;
+		this.price = price;
+		this.buyingRate = buyingRate;
+		
+	}
+
+
+
+
+
 	/** 주문시 주문상세테이블 정보 추가(주문번호로 주문내역 값 INSERT)
 	 * @param productNo
 	 * @param buyingRate
@@ -76,6 +121,24 @@ public class Order {
 		this.buyingPrice = buyingPrice;
 		this.request = request;
 		this.orderNum = orderNum;
+	
 	}
 
+
+
+
+
+	public Order(String productName, int orderDetailNo, String orderDate, int productNo) {
+		super();
+		this.productName = productName;
+		this.orderDetailNo = orderDetailNo;
+		this.orderDate = orderDate;
+		this.productNo = productNo;
+	}
+
+
+	
+
+
 }
+

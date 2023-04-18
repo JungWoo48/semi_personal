@@ -45,7 +45,7 @@
                                 <div>
         
                                     <div class="myReview">
-                                       	작성한 리뷰
+                                       	${loginMember.memberName}님이 작성한 리뷰
                                     </div>
         
                                     <div class="rightReview">
@@ -54,51 +54,60 @@
                                             <div><a href="reviewList?pageNum=1&amount=3" class="inner-review-tab">작성 가능한 리뷰 (${total })</a></div>
                                             <div><a href="reviewDoneList?pageNum=1&amount=3" class="inner-review-tab">작성한 리뷰 (${doneTotal })</a></div>
                                         </div>
-
                                         <div class="rightReivewContent">
 											<c:forEach var="list" items="${list}">
-                                            <div class="rightProductImg"> 
-
-                                                <div>
-                                                    <p>${list.productName}</p>
-                                                </div>
-        
-                                                <div class="reivewInfo">
-                                                	<div class="reviewContent">
-                                                		${list.reviewContent }
+                                                <c:if test="${doneTotal ne 0}">
+                                                    <div class="rightProductImg"> 
+                                                        <div>
+                                                            <p>${list.productName}</p>
+                                                        </div>
+                
+                                                        <div class="reivewInfo">
+                                                            <div class="reviewContent">
+                                                                ${list.reviewContent }
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <div>
+                                                            <div>
+                                                                <form action="reviewUpdate">
+                                                                    <input type="hidden" name="orderDetailNo" value="${list.orderDetailNo}">
+                                                                    <input type="hidden" name="productName" value="${list.productName}">
+                                                                    <button class="reviewAdd">리뷰 수정</button><br><br>
+                                                                </form> 
+                                                            </div>
+                                                            <div>
+                                                                <form action="reviewDelete">
+                                                                    <input type="hidden" name="orderDetailNo" value="${list.orderDetailNo}">
+                                                                    <button class="reviewAdd" onclick="reviewDelete()">리뷰 삭제</button><br><br>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-        
-                                                <div>
-                                                	<div>
-                                    				<form>
-	                                                    <button class="reviewAdd">리뷰 수정</button><br><br>
-                                    				</form> 
-                                                	</div>
-                                                	<form>
-                                                	<div>
-	                                                    <button class="reviewAdd">리뷰 삭제</button><br><br>
-                                                	</div>
-                                                	</form>
-                                                </div>
-
-                                            </div>
+                                                </c:if>
                                             </c:forEach>
 
+                                            <c:if test="${doneTotal eq 0}">
+                                                <div id="emptyReviewBoxParent">
+                                                    <div id="emptyReviewBox">작성된 리뷰가 없어요!</div>
+                                                </div>
+                                            </c:if>
                                         </div>
+
                                     </div>
+
                                     <div class="reviewListBox">
-                                    <c:if test="${pageVo.prev}">
-                                        <a href="reviewList?pageNum=${pageVo.startPage - 1 }&amount=${pageVo.amount}">이전</a> 
-                                    </c:if>
-                        			<c:forEach var="num" begin="${pageVo.startPage }" end="${pageVo.endPage }">
-	                        			<li  class="${pageVo.pageNum eq num ? 'active' : '' }">
-	                        				<a href="reviewList?pageNum=${num}&amount=${pageVo.amount}">${num}</a>
-	                        			</li>
-                        			</c:forEach>
-                         			<c:if test="${pageVo.next }">
-                        				<a href="reviewList?pageNum=${pageVo.endPage + 1 }&amount=${pageVo.amount}">다음</a>
-                        			</c:if>
+                                        <c:if test="${pageVo.prev}">
+                                            <a href="reviewDoneList?pageNum=${pageVo.startPage - 1 }&amount=${pageVo.amount}">&lt;</a> 
+                                        </c:if>
+                                        <c:forEach var="num" begin="${pageVo.startPage }" end="${pageVo.endPage }">
+                                            <li  class="${pageVo.pageNum eq num ? 'active' : '' }">
+                                                <a href="reviewDoneList?pageNum=${num}&amount=${pageVo.amount}">${num}</a>
+                                            </li>
+                                        </c:forEach>
+                                        <c:if test="${pageVo.next }">
+                                            <a href="reviewDoneList?pageNum=${pageVo.endPage + 1 }&amount=${pageVo.amount}">&gt;</a>
+                                        </c:if>
                                     </div>
         
                                 </div>
@@ -129,5 +138,10 @@
    
     <!-- main.js 연결 -->
     <script src="${contextPath}/resources/js/main.js"></script>
+    <!-- reviewDone.js 연결 -->
+    <script src="${contextPath}/resources/js/review/reviewDone.js"></script>
+
+    <!-- alert창 바꾸기 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

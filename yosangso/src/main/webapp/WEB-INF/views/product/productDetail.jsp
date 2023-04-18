@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
 
 <!DOCTYPE html>
@@ -11,23 +12,42 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/main-style.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/productDetail.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/slick.css">
-   
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://kit.fontawesome.com/881d1deef7.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     
     
     <title>productDetail</title>
+    
+     <!--탑 버튼-->
+    <a id="topBtn" href="#"> 
+        <i class="fa-solid fa-angle-up fa-2x"></i>
+    </a>
+    
+    
 </head>
 <body>
     <!-- 헤더, 컨텐츠 -->
     <main>
-        
+    <div id="sql-div">
+    <sql:setDataSource var= "conn" 
+	driver = "oracle.jdbc.driver.OracleDriver"
+	url="jdbc:oracle:thin:@//112.220.137.37:1521/xe"
+	user="yosangso"
+	password="yosangso"
+	/>
+    <c:if test="${loginMember != null}">
+     <sql:query var="resultSet" dataSource="${conn}">
+	   SELECT COUNT(*) COUNT FROM CART WHERE MEMBER_NO =${loginMember.memberNo } AND PRODUCT_NO = ${productList[0].productNo }
+	</sql:query>
+	</c:if>
+	</div>
+	
         <!-- 헤더 -->
         <jsp:include page="/WEB-INF/views/common/header.jsp"/>
         <br>
         <br>
         <br>
-        
         <section class="mainsec"> 
             <div class="all">
             <div>   
@@ -39,11 +59,13 @@
                         <img src="${contextPath}/resources/image/product/${productList[0].productName}.jpg">
                     </div>
                     <!--제품이름, 가격, 수량, 구매가격, 구매및 장바구니-->
-                    <form action="purchase" method="GET" name="purcahse">
+                    <form action="${contextPath}/order/pay" method="GET" name="purcahse">
+                    <input type="hidden" name="pay_mode" value="detail"/>
                     <div class ="productover">
                         <!--제품이름-->
                         <div class="productNm">
                             <h3>${productList[0].productName}</h3>
+                            
                         </div>
                         <!--가격-->
                         <div class="productPr">
@@ -54,6 +76,7 @@
                         <br>
                         <br>
                         <br>
+                        <img id="delicon" src="${contextPath}/resources/image/order/delivery.svg">
                         <div class="del-cost">
                             배송비 : <span id="delcost">3000</span>원&nbsp;&nbsp;(10000원 이상 구매시 무료)
                         </div>
@@ -67,21 +90,46 @@
                         <hr>
                         <!--총 금액-->
                         <div class="total-cost">
-                        상품금액&nbsp;&nbsp;<span id="counting"></span>원 + 배송비&nbsp;&nbsp;<span id=deltip></span> = 총 상품금액
-                            &nbsp;&nbsp;<span id="totalcost"></span>원
+                        	
+                        상품금액&nbsp;&nbsp;<span id="counting">${productList[0].price}</span>원 + 배송비&nbsp;&nbsp;
                         
+                        	<c:if test="${productList[0].price >= 10000}">
+                        		<span id=deltip>0</span>원
+                        		<c:set var="del" value="0"/>
+                        	</c:if>
+                        	
+                        	<c:if test="${productList[0].price < 10000}">
+                        		<c:set var="del" value="3000"/>
+                        		<span id=deltip>3000</span>원
+                        	</c:if>
+                        =
+                      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      			
+                        총 상품금액
+                        &nbsp;<span id="totalcost">${productList[0].price + del}</span>원
+                        	
                         </div>
                         
-                  
+                  		<!-- 결제페이지로 넘기는 값 입니다. -->
                         <input type="hidden" value="${productList[0].productNo}" name="productNo" id="proNo">
-                        
+                        <input type="hidden" value="${productList[0].productName}" name="productName">
+                        <input type="hidden" value="${productList[0].price}" name="price">
                         <input type="hidden" value="${loginMember.memberNo}" name="loginmember" id="loginmember">
                         <br>
-                        
-                            <!--구매 버튼-->
-                            <div>
-	                            <button type="submit" id="btn-purchase">구매하기</button>
-                            </div>
+                        <br>
+                        	
+                        	<c:if test="${loginMember != null}">
+	                            <div>
+		                            <button type="submit" id="btn-purchase">구매하기</button>
+	                            </div>
+                        	</c:if>
+							<c:if test="${loginMember == null}">
+	                            <div>
+		                            <button type="button"  onclick="return login()" id="btn-purchase">구매하기</button>
+	                            </div>
+                        	</c:if>
 	                            
                      </form>       
                             <br>
@@ -89,15 +137,20 @@
                             
                      <c:choose>     
                         <c:when test="${loginMember != null}"> 
-                            	<!--장바구니 버튼-->
-                           		<button type="button"  onclick="return addcart()" id="btn-addcart">장바구니</button>
+                        	<c:choose>
+                            	<%--장바구니 버튼--%>
+	                         	<c:when test="${resultSet.rows[0].COUNT == '0'}">
+	                       			<button type="button"  onclick="return addcart()" id="btn-addcart">장바구니</button>
+	                        	</c:when>
+	                        	<c:otherwise>
+	                       			<button type="button"  onclick="swal('장바구니에 이미 있는 상품입니다.','','warning')" id="btn-addcart">장바구니</button>
+	                        	</c:otherwise>
+                        	</c:choose>
+                  
                         </c:when>
-                        
                         <c:otherwise>
-                        		<button type="button"  onclick="return login()" id="btn-addcart">장바구니</button>
-                        </c:otherwise>
-                        
-                        
+                       			<button type="button"  onclick="return login()" id="btn-addcart">장바구니</button>
+                        </c:otherwise>   
            			</c:choose>
                             </div>   
                     </div>
@@ -143,13 +196,15 @@
 
                <!--추천 상품-->
                <div id="slideContainer">
-        
+        			<h2 id="sug">추천 상품</h2>
                 <div class="items">
+                
                     <button class="prev"><</button>
-                    <div class="item active"><img src="${contextPath}/resources/image/product/Codeage, Fermented, 남성용 종합비타민, 캡슐 120정.jpg"></div>
-                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, 비타민, 메디테이트, 캡슐 60정정.jpg"></div>
-                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, 비타민, 모발, 비오틴, 콜라겐. 케라틴, 캡슐 120정.jpg"></div>
-                    <div class="item"><img src="${contextPath}/resources/image/product/Codeage, 비타민, 헤어 구미젤리, 무설탕, 비오틴, 비타민 C, 미네랄, 딸기 코코넛, 60개.jpg"></div>
+                    <div class="item active"><a href="${contextPath}/product/productDetail?ProductNo=21"><img src="${contextPath}/resources/image/all/NOW Foods, E-400, 268mg, 소프트젤 250정.jpg"></a></div>
+                       <div class="item"><a href="${contextPath}/product/productDetail?ProductNo=15"><img src="${contextPath}/resources/image/all/NOW Foods, 고효능 비타민D-3, 10,000IU, 소프트젤 120정.jpg"></a></div>
+                       <div class="item"><a href="${contextPath}/product/productDetail?ProductNo=24"><img src="${contextPath}/resources/image/all/Jarrow Formulas, Zinc Balance, 베지 캡슐 100정.jpg"></a></div>
+                       <div class="item"><a href="${contextPath}/product/productDetail?ProductNo=33"><img src="${contextPath}/resources/image/all/Codeage, 비타민, 모발, 비오틴, 콜라겐. 케라틴, 캡슐 120정.jpg"></a></div>
+                       <div class="item"><a href="${contextPath}/product/productDetail?ProductNo=42"><img src="${contextPath}/resources/image/all/California Gold Nutrition, 비타민D3(감귤류), 2,000IU, 30ml(1fl oz) - 시트러스맛.jpg"></a></div>
                     <button class="next">></button>
                 </div>
                     <div class="stepper">
@@ -172,7 +227,7 @@
                 <div class="review-container">
                     <h2>구매후기</h2>
                     <!--리뷰 1-->
-                    <div>
+                    <div class="reviewbox">
                         <!--고객 아이콘 이름 게시일-->
                         <div class="review-all">
                             <!--고객 아이콘-->
@@ -180,22 +235,26 @@
                             <!--고객 이름-->
                             <div class="review-name"><span>${reviewList[0].memberName}</span></div>
                             <!--게시일-->
-                            <div class="review-date"><span>${reviewList[0].reviewDate}</span></div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="review-date">게시일 : <span>${reviewList[0].reviewDate}</span></div>
+                            <!-- 평점 -->
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="review-rate">평점 : <span>${reviewList[0].reviewRate}</span></div>
                         </div>
             
                         <!--리뷰 내용-->
                         <div class="review-main">
-                            <img src="/assets/re1.jpeg">
-                            <div>
+                            
+                            
                                 <pre class="review-con">${reviewList[0].reviewContent}</pre>
-                            </div>    
+                              
                         </div>
             
                     </div>
                     <br>
                     <br>
                     <!--리뷰 2-->
-                    <div>
+                    <div class="reviewbox">
                         <!--고객 아이콘 이름 게시일-->
                         <div class="review-all">
                             <!--고객 아이콘-->
@@ -203,12 +262,16 @@
                             <!--고객 이름-->
                             <div class="review-name"><span>${reviewList[1].memberName}</span></div>
                             <!--게시일-->
-                            <div class="review-date">${reviewList[1].reviewDate}</div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="review-date">게시일 : ${reviewList[1].reviewDate}</div>
+                             <!-- 평점 -->
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="review-rate">평점 : <span>${reviewList[1].reviewRate}</span></div>
                         </div>
             
                         <!--리뷰 내용-->
                         <div class="review-main">
-                            <img src="/assets/re2.jpeg">
+                            
                             <pre class="review-con">${reviewList[1].reviewContent}</pre>
                         </div>
                         
@@ -227,11 +290,11 @@
                 <!--FAQ 컨테이너-->
                 
                 <div class="FAQ-container">
-                    <h2>QNA</h2>
+                    <h2>Q&A</h2>
                     <!--FAQ1-->
-                    <div>
+                    <div class="QNAbox">
                         <!--고객 아이콘, 이름, 게시일-->
-                        <div class="FAQ-all">
+                        <div class="FAQ-all1">
                             <!--고객 아이콘-->
                             <div class="FAQ-icon"><i class="fa-solid fa-circle-user"></i></div>
                             <!-- 고객 이름-->
@@ -250,7 +313,7 @@
                           </div>
                         </div>
                         <div class="anw">
-                         <span>하루에 300 달톤씩 복용하시면 됩니다</span>   
+                         <span>준비중입니다</span>   
                         </div>
                     </div>
             
@@ -260,22 +323,22 @@
                             <!--고객 아이콘-->
                             <div class="FAQ-icon"><i class="fa-solid fa-circle-user"></i></div>
                             <!-- 고객 이름-->
-                            <div class="FAQ-name">하현성</div>
+                            <div class="FAQ-name">${QNAList[1].memberName}</div>
                             <!-- 게시일-->
-                            <div class="FAQ-date"><input type="date"></div>
+                            <div class="FAQ-date">${QNAList[1].inquiryDate}</div>
                         </div>
             
                         <!-- 질문 내용-->
-                    <div id="Accordion_wrap">
+                    <div id="Accordion_wrap2">
                         <div class="que">
-                         <span>먹고나서 부작용이 있는거 같아요</span>
+                         <span>${QNAList[1].inquiryContent}</span>
                           <div class="arrow-wrap">
                             <span class="arrow-top">↑</span>
                            <span class="arrow-bottom">↓</span>
                           </div>
                         </div>
                         <div class="anw">
-                         <span>즉시 복용 중지 후 병원을 찾아가 주세요</span>   
+                         <span>준비중입니다</span>   
                         </div>
                     </div>
                 </div>

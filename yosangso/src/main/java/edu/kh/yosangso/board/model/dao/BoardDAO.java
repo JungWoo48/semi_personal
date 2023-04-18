@@ -43,6 +43,7 @@ public class BoardDAO {
 	 * @param content
 	 * @return
 	 * @throws Exception
+	 * @author lee
 	 */
 	public int inquiryAdd(Connection conn, String content, Member loginMember) throws Exception {
 		
@@ -76,6 +77,7 @@ public class BoardDAO {
 	 * @param inputPw
 	 * @return
 	 * @throws Exception
+	 * @author lee
 	 */
 	public int inquiryDelete(Connection conn, String boardNo) throws Exception {
 		
@@ -107,6 +109,7 @@ public class BoardDAO {
 	 * @param boardNo 
 	 * @return
 	 * @throws Exception
+	 * @author lee
 	 */
 	public int inquiryUpdate(Connection conn, String updateContent, String boardNo) throws Exception{
 		
@@ -133,6 +136,7 @@ public class BoardDAO {
 	 * @param conn
 	 * @return
 	 * @throws Exception
+	 * @author lee
 	 */
 	public int selectInquiryCount(Connection conn) throws Exception{
 		int result = 0;
@@ -153,6 +157,15 @@ public class BoardDAO {
 		return result ;
 	}
 
+	/** 전체 게시물 목록 조회 DAO
+	 * @param conn
+	 * @param inquiryList
+	 * @param pagination
+	 * @return
+	 * @throws Exception
+	 * @author lee
+	 * 
+	 */
 	public List<Board> selectInquiryList(Connection conn, List<Board> inquiryList, Pagination pagination) throws Exception{
 		
 		
@@ -196,7 +209,7 @@ public class BoardDAO {
 	 * @param pro
 	 * @return
 	 */
-	public List<QNA> selectQNA(Connection conn, int pro) throws Exception{
+	public List<QNA> selectQNA(Connection conn) throws Exception{
 		
 		List<QNA> QNAList = new ArrayList<>();
 		
@@ -204,11 +217,8 @@ public class BoardDAO {
 			
 			String sql = prop.getProperty("selectQNA");
 			
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, pro);
-			
-			rs = pstmt.executeQuery();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
 				
@@ -217,15 +227,15 @@ public class BoardDAO {
 				String inquiryDate = rs.getString("INQUIRY_DATE");
 				int memberNo = rs.getInt("MEMBER_NO");
 				String memberName = rs.getString("MEMBER_NM");
-				int productNo = rs.getInt("PRODUCT_NO");
+
 				
-				QNAList.add(new QNA(inquiryNO, inquiryContent, inquiryDate, memberNo, memberName, productNo ));
+				QNAList.add(new QNA(inquiryNO, inquiryContent, inquiryDate, memberNo, memberName));
 				
 			}
 			
 		} finally {
 			close(rs);
-			close(pstmt);
+			close(stmt);
 			
 		}
 		
